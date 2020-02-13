@@ -37,6 +37,7 @@ class TestBookingAPI:
 
     @allure.testcase("Verify Booking Functionality")
     @pytest.mark.regression
+    @pytest.mark.smoke
     def test_booking_functionality(self, rp_logger):
         """
         This test is validating the users from api response. (positive scenario)
