@@ -38,11 +38,11 @@ reports:
     - api_regression_tests
   script:
     - docker pull elixirops/docker-allure
-    - docker run -v $(pwd)/allure-report:/ExecutionReports -v $(pwd)/allure-results:/ExecutionResults elixirops/docker-allure allure generate /ExecutionResults --clean -o /allure-report
+    - docker run -v $(pwd)/allure-report:/allure-report -v $(pwd)/allure-results:/ExecutionResults elixirops/docker-allure allure generate /ExecutionResults --clean -o /allure-report
 
   artifacts:
     name: "api-$CI_COMMIT_TAG"
     expire_in: 1 week
     when: always
     paths:
-      - ./ExecutionReports
+      - ./allure-report
