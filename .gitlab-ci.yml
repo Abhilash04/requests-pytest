@@ -1,0 +1,48 @@
+stages:
+  - test
+  - reports
+
+api_smoke_tests:
+  image: python:slim-buster
+  stage: test
+  script:
+    - pip install -r requirements.txt
+    - py.cleanup -p && py.test -m smoke --alluredir ExecutionResults/
+  artifacts:
+    name: "api-smoke-$CI_COMMIT_TAG"
+    expire_in: 1 week
+    when: always
+    paths:
+      - ./Logs
+      - ./ExecutionResults
+
+api_regression_tests:
+  image: python:slim-buster
+  stage: test
+  script:
+    - pip install -r requirements.txt
+    - py.cleanup -p && py.test -m regression --alluredir ExecutionResults/
+  artifacts:
+    name: "api-regression-$CI_COMMIT_TAG"
+    expire_in: 1 week
+    when: always
+    paths:
+      - ./Logs
+      - ./ExecutionResults
+
+reports:
+  image: gitlab/dind
+  stage: reports
+  dependencies:
+    - api_smoke_tests
+    - api_regression_tests
+  script:
+    - docker pull elixirops/docker-allure
+    - docker run -v $(pwd)/allure-report:/ExecutionReports -v $(pwd)/allure-results:/ExecutionResults elixirops/docker-allure allure generate /ExecutionResults --clean -o /allure-report
+
+  artifacts:
+    name: "api-$CI_COMMIT_TAG"
+    expire_in: 1 week
+    when: always
+    paths:
+      - ./ExecutionReports
