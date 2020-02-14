@@ -40,7 +40,7 @@ class TestBookingAPI:
     @pytest.mark.smoke
     def test_booking_functionality(self, rp_logger):
         """
-        This test is validating the users from api response. (positive scenario)
+        This test is validating the booking functionality. (positive scenario)
         :return: return test status
         """
 

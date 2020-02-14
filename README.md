@@ -38,12 +38,12 @@
     ```sh
     pip install -r requirements.txt
     ```
-- Add your test case under TestScripts folder
+- Add your test case under **TestScripts** folder
 - Add your test data to **TestData.xslx** file
 - Goto **execution_commands.md** and select specific command to execute the test case
 
 ### Example:
-- Open pycharm terminal (Alt+F12) and run following command to invoke the chrome browser locally on staging environment
+- Open pycharm terminal (Alt+F12) and run following command to run the smoke test cases
     ```sh
     py.cleanup -p && py.test -m smoke --alluredir ExecutionResults/
     ```
